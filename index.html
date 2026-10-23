@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpendWise | Student Finance</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- HOME / LANDING PAGE -->
+  <section id="welcome" class="welcome">
+    <nav class="topbar">
+      <button class="brand" data-home><span class="logo">S</span> SpendWise</button>
+      <span class="pill">SMARTER MONEY HABITS</span>
+    </nav>
+
+    <div class="hero">
+      <div class="eyebrow">✦ YOUR MONEY. YOUR RULES.</div>
+      <h1>Spend smarter.<br><span>Live better.</span></h1>
+      <p>Take control of your money. Track expenses, set your own budget and build better financial habits.</p>
+      <button class="primary big" data-enter>Enter SpendWise ↗</button>
+
+      <div class="earth-wrap">
+        <div class="earth"><div class="earth-map"></div><div class="earth-shine"></div></div>
+        <div class="orbit"></div>
+        <div class="orbit orbit-two"></div>
+      </div>
+      <div class="hero-foot">BUILT FOR STUDENT LIFE • SIMPLE BY DESIGN</div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <div id="workspace" class="app hidden">
+    <aside class="sidebar">
+      <button class="brand" data-home><span class="logo">S</span> SpendWise</button>
+      <p class="side-label">YOUR WORKSPACE</p>
+      <button class="nav active" data-page="overview">◫ <span>Overview</span></button>
+      <button class="nav" data-page="transactions">↔ <span>Transactions</span></button>
+      <button class="nav" data-page="analytics">▥ <span>Analytics</span></button>
+      <button class="nav" data-page="budgets">◎ <span>Budgets & Goals</span></button>
+      <div class="side-bottom">✦ Personal finance dashboard</div>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <div>
+          <div class="eyebrow">YOUR FINANCIAL SPACE</div>
+          <h1 id="pageTitle">Overview</h1>
+          <p id="pageDescription">Here's how your money is looking.</p>
+        </div>
+        <div class="header-right">
+          <span id="todayDate"></span>
+          <button class="primary" id="openForm">＋ Add expense</button>
+        </div>
+      </header>
+
+      <!-- OVERVIEW -->
+      <section id="page-overview" class="page">
+        <div class="stats">
+          <article class="stat"><small>SPENT THIS MONTH</small><h2 id="totalSpent">₹0</h2><p>Total expenses this month</p></article>
+          <article class="stat"><small>YOUR MONTHLY BUDGET</small><h2 id="budgetDisplay">₹0</h2><p>Set your own spending limit</p></article>
+          <article class="stat"><small>BUDGET REMAINING</small><h2 id="remaining">₹0</h2><p id="remainingNote">You're on track</p></article>
+        </div>
+
+        <div class="columns">
+          <article class="panel">
+            <h3>Spending activity</h3><p>Your expenses over the last 7 days</p>
+            <div id="weeklyChart" class="weekly-chart"></div>
+          </article>
+          <article class="panel">
+            <h3>Budget progress</h3><p>How much of your budget you've used</p>
+            <div id="budgetDonut" class="donut"><div><strong id="budgetPercent">0%</strong><small>used</small></div></div>
+            <div class="budget-line"><span>Spent</span><b id="budgetUsed">₹0</b></div>
+            <div class="budget-line"><span>Remaining</span><b id="budgetLeftSmall">₹0</b></div>
+            <p id="budgetMessage"></p>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel-head"><div><h3>Recent transactions</h3><p>Your latest expenses</p></div><button class="text-button" data-page="transactions">View all ↗</button></div>
+          <div id="recentList"></div>
+          <div id="recentEmpty" class="empty">No expenses yet. Add your first expense!</div>
+        </article>
+      </section>
+
+      <!-- TRANSACTIONS -->
+      <section id="page-transactions" class="page hidden">
+        <article class="panel">
+          <div class="panel-head"><div><h3>All transactions</h3><p>Search, filter, edit or delete expenses.</p></div><span id="transactionCount" class="pill">0 transactions</span></div>
+          <div class="filters">
+            <input id="searchInput" placeholder="Search expenses...">
+            <select id="categoryFilter">
+              <option value="">All categories</option><option>Food</option><option>Travel</option><option>Shopping</option><option>Education</option><option>Entertainment</option><option>Other</option>
+            </select>
+            <input id="dateFilter" type="month" aria-label="Filter by month">
+          </div>
+          <div id="expenseList"></div>
+          <div id="emptyState" class="empty">No matching expenses.</div>
+        </article>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section id="page-analytics" class="page hidden">
+        <div class="stats">
+          <article class="stat"><small>TOTAL SPENDING</small><h2 id="analyticsTotal">₹0</h2></article>
+          <article class="stat"><small>TOP CATEGORY</small><h2 id="topCategory">—</h2></article>
+          <article class="stat"><small>AVERAGE EXPENSE</small><h2 id="averageExpense">₹0</h2></article>
+        </div>
+        <div class="columns">
+          <article class="panel"><h3>Spending by category</h3><div id="categoryChart" class="category-chart"></div><div id="chartEmpty" class="empty">Add expenses to see analytics.</div></article>
+          <article class="panel"><h3>Weekly activity</h3><div id="analyticsWeekly" class="weekly-chart"></div></article>
+        </div>
+      </section>
+
+      <!-- CUSTOM BUDGET + GOALS -->
+      <section id="page-budgets" class="page hidden">
+        <div class="columns">
+          <article class="panel">
+            <h3>Set your monthly budget</h3>
+            <p>Your budget is personal. Choose any amount that works for you.</p>
+            <form id="budgetForm" class="stack">
+              <label>Monthly budget (₹)
+                <input id="budgetInput" type="number" min="1" step="0.01" placeholder="Enter your budget" required>
+              </label>
+              <button class="primary">Save my budget</button>
+            </form>
+            <div class="budget-line"><span>Spent this month</span><b id="bigBudget">₹0</b></div>
+            <div class="progress"><i id="budgetBar"></i></div>
+            <p id="budgetProgressLabel"></p>
+          </article>
+
+          <article class="panel">
+            <h3>Create a savings goal</h3>
+            <p>Save for something you want.</p>
+            <form id="goalForm" class="stack">
+              <label>Goal name<input id="goalName" placeholder="e.g. New headphones" required></label>
+              <label>Target amount (₹)<input id="goalTarget" type="number" min="1" required></label>
+              <label>Already saved (₹)<input id="goalSaved" type="number" min="0" value="0" required></label>
+              <button class="primary">＋ Create goal</button>
+            </form>
+          </article>
+        </div>
+        <article class="panel"><h3>Your savings goals</h3><div id="goalsList"></div><div id="goalsEmpty" class="empty">No goals yet. Create your first goal above.</div></article>
+      </section>
+    </main>
+  </div>
+
+  <!-- ADD / EDIT EXPENSE MODAL -->
+  <div id="expenseModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="panel-head"><h2 id="modalTitle">Add an expense</h2><button id="closeForm" class="secondary">✕</button></div>
+      <form id="expenseForm" class="stack">
+        <label>Expense name<input id="expenseName" placeholder="e.g. Lunch" required maxlength="80"></label>
+        <label>Amount (₹)<input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+        <label>Category<select id="expenseCategory"><option>Food</option><option>Travel</option><option>Shopping</option><option>Education</option><option>Entertainment</option><option>Other</option></select></label>
+        <label>Date<input id="expenseDate" type="date" required></label>
+        <div class="modal-actions"><button type="button" id="cancelForm" class="secondary">Cancel</button><button class="primary">Save expense</button></div>
+      </form>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+</body>
+</html>
